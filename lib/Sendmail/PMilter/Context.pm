@@ -305,10 +305,12 @@ sub main ($) {
 
 	# XXX better error handling?  die here to let an eval further up get it?
 	if ($err) {
-		$this->write_packet(SMFIR_TEMPFAIL) if defined($socket);
+		# completely unnecessary because at this point 'c' is already sent 
+		# by call_hooks() and socket is closed by MTA
+		#$this->write_packet(SMFIR_TEMPFAIL) if defined($socket);
 		warn $err;
-	} else {
-		$this->write_packet(SMFIR_CONTINUE) if defined($socket);
+	#} else {
+		#$this->write_packet(SMFIR_CONTINUE) if defined($socket);
 	}
 
 	undef;
