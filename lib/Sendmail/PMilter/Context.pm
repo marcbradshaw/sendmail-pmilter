@@ -469,7 +469,7 @@ sub getsymval ($$) {
 	my $this = shift;
 	my $key = shift;
 
-	foreach my $code (SMFIC_RCPT, SMFIC_MAIL, SMFIC_HELO, SMFIC_CONNECT) {
+	foreach my $code (SMFIC_RCPT, SMFIC_MAIL, SMFIC_HELO, SMFIC_CONNECT, SMFIC_HEADER) {
 		my $val = $this->{symbols}{$code}{$key};
 
 		return $val if defined($val);
