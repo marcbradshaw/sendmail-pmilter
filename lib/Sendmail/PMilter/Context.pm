@@ -305,10 +305,7 @@ sub main ($) {
 
 	# XXX better error handling?  die here to let an eval further up get it?
 	if ($err) {
-		$this->write_packet(SMFIR_TEMPFAIL) if defined($socket);
 		warn $err;
-	} else {
-		$this->write_packet(SMFIR_CONTINUE) if defined($socket);
 	}
 
 	undef;
@@ -472,7 +469,7 @@ sub getsymval ($$) {
 	my $this = shift;
 	my $key = shift;
 
-	foreach my $code (SMFIC_RCPT, SMFIC_MAIL, SMFIC_HELO, SMFIC_CONNECT) {
+	foreach my $code (SMFIC_RCPT, SMFIC_MAIL, SMFIC_HELO, SMFIC_CONNECT, SMFIC_HEADER) {
 		my $val = $this->{symbols}{$code}{$key};
 
 		return $val if defined($val);
