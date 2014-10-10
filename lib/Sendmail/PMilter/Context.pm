@@ -584,6 +584,32 @@ sub addheader ($$$) {
 	$this->write_packet(SMFIR_ADDHEADER, "$header\0$value\0");
 	1;
 }
+=pod
+
+=item $ctx->prependheader(HEADER, VALUE)
+
+Prepend header HEADER with value VALUE to this mail.  Does not change any
+existing headers with the same name.  Only callable from the "eom" callback.
+
+Returns a true value on success, undef on failure.
+
+=cut
+
+sub prependheader ($$$) {
+	my $this = shift;
+	my $header = shift || die "prependheader: no header name\n";
+	my $value = shift || die "prependheader: no header value\n";
+
+	die "prependheader: called outside of EOM\n" if ($this->{cb} ne 'eom');
+	die "prependheader: SMFIF_ADDHDRS not in capability list\n" unless ($this->{callback_flags} & SMFIF_ADDHDRS);
+
+        $this->write_packet( SMFIR_INSHEADER,
+                    "\0\0\0\0"
+                  . $header . "\0"
+                  . $value
+                  . "\0" );
+	1;
+}
 
 =pod
 
